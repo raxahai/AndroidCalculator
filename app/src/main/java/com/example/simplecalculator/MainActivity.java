@@ -21,7 +21,11 @@ public class MainActivity extends AppCompatActivity {
     private Button button1;
     private Button button0;
     private String text = "";
-    private int number = 0;
+    private int number1 = 0;
+    private int number2 = 0;
+    double value;
+
+    boolean add,subtract,multiply,divide;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,26 +46,59 @@ public class MainActivity extends AppCompatActivity {
         public void performCalculation(View view){
             switch (view.getId()){
                 case R.id.button_plus:
-                    number += Integer.parseInt(text);
+                    number1 = Integer.parseInt(text);
+                    add = true;
+                    text = "";
+                    textView.setText(text);
+                    break;
+                case R.id.button_multiply:
+                    number1 = Integer.parseInt(text);
+                    multiply = true;
+                    text = "";
+                    textView.setText(text);
+                    break;
+                case R.id.button_subtract:
+                    number1 = Integer.parseInt(text);
+                    subtract = true;
+                    text = "";
+                    textView.setText(text);
+                    break;
+                case R.id.buttonDivide:
+                    number1 = Integer.parseInt(text);
+                    divide = true;
                     text = "";
                     textView.setText(text);
                     break;
                 case R.id.button_equals:
-                    Log.d("General", Integer.toString(number));
-                    textView.setText(Integer.toString(number));
+                    number2 = Integer.parseInt(text);
+                    if (add == true){
+                        value = number1 + number2;
+                    }
+                    if (subtract == true){
+                        value = number1 - number2;
+                    }
+                    if (multiply == true){
+                        value = number1 * number2;
+                    }
+                    if (divide == true){
+                        value = number1 / number2;
+                    }
+                    Log.d("General", Integer.toString(number1));
+                    textView.setText(String.format("%.0f",value));
                     break;
                 case R.id.buttonAllClear:
                     text = "";
-                    number = 0;
+                    number1 = 0;
+                    add = false;
+                    divide = false;
+                    multiply = false;
+                    subtract = false;
                     textView.setText(text);
                     break;
                 default:
                     if (text.length()<12){
                     text += ((Button) view).getText().toString();
                     textView.setText(text);
-                    if (number>0){
-                        number += Integer.parseInt(text);
-                    }
                     }
                     Log.d("General", text);
                     break;
